@@ -20,18 +20,18 @@ jobs:
   steps: 
   - script: echo Hello World!
     displayName: "Run a on-line script"
-    
-steps:
-- task: Maven@3
-  inputs:
-    mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.8'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
+- job:    
+  steps:
+  - task: Maven@3
+    inputs:
+      mavenPomFile: 'pom.xml'
+      mavenOptions: '-Xmx3072m'
+      javaHomeOption: 'JDKVersion'
+      jdkVersionOption: '1.8'
+      jdkArchitectureOption: 'x64'
+      publishJUnitResults: true
+      testResultsFiles: '**/surefire-reports/TEST-*.xml'
+      goals: 'package'
     
 - job: ErrorHandler
   dependsOn: Work
@@ -44,6 +44,6 @@ steps:
         --org $(System.TeamFoundationCollectionUri) \
         --project $(System.TeamProject)
 
-  env:
+    env:
      AZURE_DEVOPS_EXT_PAT: $(System.AccessToken)
-     displayName: 'Create work item on failure'
+  displayName: 'Create work item on failure'
