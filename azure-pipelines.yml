@@ -4,7 +4,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
 
 trigger:
-- main
+- Tracy_test_azure-pipelines
 
 pool:
   vmImage: ubuntu-latest
