@@ -35,7 +35,7 @@ jobs:
     
 - job: ErrorHandler
   dependsOn: Work
-  condition: failed()
+  condition: success()
   steps:
   - bash: |
       az boards work-item create \
