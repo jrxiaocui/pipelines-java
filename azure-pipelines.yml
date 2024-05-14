@@ -25,13 +25,8 @@ strategy:
 pool:
   vmImage: $(imageName)
 
-jobs:
-- job: Work
-  steps: 
-  - script: echo Hello World!
-    displayName: "Run a on-line script"
-- job:    
-  steps:
+
+steps:
   - task: Maven@3
     inputs:
       mavenPomFile: 'pom.xml'
@@ -49,19 +44,3 @@ jobs:
       summaryFileLocation: "$(System.DefaultWorkingDirectory)/**/site/jacoco/jacoco.xml"
       reportDirectory: "$(System.DefaultWorkingDirectory)/**/site/jacoco"
       failIfCoverageEmpty: true     
-       
-- job: ErrorHandler
-  dependsOn: Work
-  #condition: succeeded()
-  condition: failed()
-  steps:
-  - bash: |
-      az boards work-item create \
-        --title "Build $(build.buildNumber) failed" \
-        --type bug \
-        --org $(System.TeamFoundationCollectionUri) \
-        --project $(System.TeamProject)
-
-    env:
-     AZURE_DEVOPS_EXT_PAT: $(System.AccessToken)
-  displayName: 'Create work item on failure'
