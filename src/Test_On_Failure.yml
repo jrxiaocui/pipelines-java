@@ -7,7 +7,7 @@ parameters:
   default: false
 
 trigger:
-- main
+- Tracy_test_azure_pipelines
 
 pool:
   vmImage: ubuntu-latest
